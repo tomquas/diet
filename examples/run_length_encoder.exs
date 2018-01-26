@@ -2,7 +2,7 @@ defmodule RLE do
 
   use Diet.Transformations
 
-  transforms do
+  reductions do
 
     { :rle, {[], result} } ->
             {:done, result |> Enum.reverse}
@@ -22,12 +22,13 @@ defmodule RLE do
 
 end
 
-alias Diet.Runner
+alias Diet.Stepper
 
-runner = Runner.new(RLE, nil)
+runner = Stepper.new(RLE, nil)
+# Diet.debug(runner)
 
 list = "aabccccdeeffffff" |> String.codepoints
 
-{ result, _runner } = Runner.run(runner, { :rle, list })
+{ result, _runner } = Stepper.run(runner, { :rle, list })
 
 IO.inspect result # => {:done, [{"a", 2}, "b", {"c", 4}, "d", {"e", 2}, {"f", 6}]}
